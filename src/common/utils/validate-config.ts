@@ -6,7 +6,7 @@ import { ClassConstructor } from 'class-transformer/types/interfaces';
  * Validate and transform environment variables
  * into a strongly typed configuration object.
  */
-function validateConfig<T extends object>(
+export function validateConfig<T extends object>(
   config: Record<string, unknown>,
   envVariablesClass: ClassConstructor<T>,
 ) {
@@ -22,5 +22,3 @@ function validateConfig<T extends object>(
   }
   return validatedConfig;
 }
-
-export default validateConfig;
