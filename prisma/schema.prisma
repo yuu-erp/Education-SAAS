@@ -1,0 +1,382 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ======================================================
+// ENUMS
+// ======================================================
+
+enum Role {
+  OWNER
+  ADMIN
+  TEACHER
+  PARENT
+  STUDENT
+}
+
+enum UserStatus {
+  ACTIVE
+  INVITED
+  SUSPENDED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum SubscriptionPlan {
+  BASIC
+  PRO
+  CENTER_PLUS
+}
+
+enum SubscriptionStatus {
+  TRIAL
+  ACTIVE
+  EXPIRED
+  CANCELED
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  DROPPED
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  OVERDUE
+  CANCELED
+}
+
+enum PaymentMethod {
+  CASH
+  BANK_TRANSFER
+  MOMO
+  ZALOPAY
+}
+
+enum ParentRelationship {
+  FATHER
+  MOTHER
+  GUARDIAN
+  OTHER
+}
+
+enum NotificationType {
+  SYSTEM
+  ATTENDANCE
+  TUITION
+  ANNOUNCEMENT
+}
+
+// ======================================================
+// USERS
+// ======================================================
+
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  passwordHash  String
+  firstName     String?
+  lastName      String?
+  avatarUrl     String?
+  status        UserStatus   @default(ACTIVE)
+  emailVerified Boolean      @default(false)
+  memberships   Membership[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  deletedAt     DateTime?
+
+  @@index([email])
+}
+
+// ======================================================
+// ORGANIZATIONS
+// ======================================================
+
+model Organization {
+  id            String         @id @default(cuid())
+  name          String
+  slug          String         @unique
+  logoUrl       String?
+  phone         String?
+  email         String?
+  address       String?
+  timezone      String         @default("Asia/Ho_Chi_Minh")
+  memberships   Membership[]
+  subscription  Subscription?
+  students      Student[]
+  teachers      Teacher[]
+  classes       Class[]
+  parents       Parent[]
+  notifications Notification[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  deletedAt     DateTime?
+}
+
+// ======================================================
+// MEMBERSHIPS
+// ======================================================
+
+model Membership {
+  id             String       @id @default(cuid())
+  userId         String
+  organizationId String
+  role           Role
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+
+  @@unique([userId, organizationId])
+  @@index([organizationId])
+  @@index([userId])
+}
+
+// ======================================================
+// SUBSCRIPTIONS
+// ======================================================
+
+model Subscription {
+  id                 String             @id @default(cuid())
+  organizationId     String             @unique
+  plan               SubscriptionPlan
+  status             SubscriptionStatus
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  organization       Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+}
+
+// ======================================================
+// STUDENTS
+// ======================================================
+
+model Student {
+  id             String          @id @default(cuid())
+  organizationId String
+  code           String?
+  firstName      String
+  lastName       String
+  dateOfBirth    DateTime?
+  gender         Gender?
+  phone          String?
+  email          String?
+  address        String?
+  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  enrollments    Enrollment[]
+  attendances    Attendance[]
+  studentParents StudentParent[]
+  invoices       Invoice[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  deletedAt      DateTime?
+
+  @@index([organizationId])
+}
+
+// ======================================================
+// PARENTS
+// ======================================================
+
+model Parent {
+  id             String             @id @default(cuid())
+  organizationId String
+  firstName      String
+  lastName       String
+  phone          String
+  email          String?
+  relationship   ParentRelationship
+  organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  students       StudentParent[]
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  deletedAt      DateTime?
+
+  @@index([organizationId])
+}
+
+// ======================================================
+// STUDENT PARENT RELATION
+// ======================================================
+
+model StudentParent {
+  id        String  @id @default(cuid())
+  studentId String
+  parentId  String
+  isPrimary Boolean @default(false)
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  parent    Parent  @relation(fields: [parentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, parentId])
+}
+
+// ======================================================
+// TEACHERS
+// ======================================================
+
+model Teacher {
+  id             String       @id @default(cuid())
+  organizationId String
+  firstName      String
+  lastName       String
+  email          String?
+  phone          String?
+  bio            String?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  classes        Class[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  deletedAt      DateTime?
+
+  @@index([organizationId])
+}
+
+// ======================================================
+// CLASSES
+// ======================================================
+
+model Class {
+  id             String       @id @default(cuid())
+  organizationId String
+  teacherId      String?
+  name           String
+  description    String?
+  capacity       Int?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  teacher        Teacher?     @relation(fields: [teacherId], references: [id])
+  enrollments    Enrollment[]
+  schedules      Schedule[]
+  attendances    Attendance[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  deletedAt      DateTime?
+
+  @@index([organizationId])
+}
+
+// ======================================================
+// ENROLLMENTS
+// ======================================================
+
+model Enrollment {
+  id             String           @id @default(cuid())
+  organizationId String
+  studentId      String
+  classId        String
+  enrolledAt     DateTime         @default(now())
+  status         EnrollmentStatus @default(ACTIVE)
+  student        Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  class          Class            @relation(fields: [classId], references: [id], onDelete: Cascade)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@unique([studentId, classId])
+  @@index([organizationId])
+}
+
+// ======================================================
+// ATTENDANCE
+// ======================================================
+
+model Attendance {
+  id             String           @id @default(cuid())
+  organizationId String
+  studentId      String
+  classId        String
+  status         AttendanceStatus
+  attendedAt     DateTime
+  note           String?
+  student        Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  class          Class            @relation(fields: [classId], references: [id], onDelete: Cascade)
+  createdAt      DateTime         @default(now())
+
+  @@index([organizationId])
+}
+
+// ======================================================
+// SCHEDULES
+// ======================================================
+
+model Schedule {
+  id        String   @id @default(cuid())
+  classId   String
+  weekday   Int
+  startTime String
+  endTime   String
+  room      String?
+  class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ======================================================
+// INVOICES
+// ======================================================
+
+model Invoice {
+  id             String        @id @default(cuid())
+  organizationId String
+  studentId      String
+  amount         Decimal
+  status         InvoiceStatus
+  dueDate        DateTime
+  student        Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  payments       Payment[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([organizationId])
+}
+
+// ======================================================
+// PAYMENTS
+// ======================================================
+
+model Payment {
+  id        String        @id @default(cuid())
+  invoiceId String
+  amount    Decimal
+  paidAt    DateTime
+  method    PaymentMethod
+  invoice   Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  createdAt DateTime      @default(now())
+}
+
+// ======================================================
+// NOTIFICATIONS
+// ======================================================
+model Notification {
+  id             String           @id @default(cuid())
+  organizationId String
+  title          String
+  content        String
+  type           NotificationType
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime         @default(now())
+
+  @@index([organizationId])
+}
