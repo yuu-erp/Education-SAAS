@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from '../../database/prisma.module';
+import { PrismaModule } from '../../database/prisma/prisma.module';
 import { StudentsController } from './controllers/students.controller';
 import { StudentsRepository } from './repositories/students.repository';
 import { StudentMapper } from './mappers/student.mapper';
