@@ -4,6 +4,7 @@ import { appConfig, authConfig, databaseConfig, mailConfig } from '@/config';
 import { PrismaModule } from '@/database';
 import { AuthModule } from '@/modules/auth/auth.module';
 import { StudentsModule } from '@/modules/students/students.module';
+import { OrganizationModule } from '@/modules/organization/organization.module';
 import { MailModule } from '@/integrations/mail/mail.module';
 
 @Module({
@@ -17,6 +18,7 @@ import { MailModule } from '@/integrations/mail/mail.module';
     MailModule,
     AuthModule,
     StudentsModule,
+    OrganizationModule,
   ],
   controllers: [],
   providers: [],
