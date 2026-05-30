@@ -1,7 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
-import { ROLES_KEY } from '../decorators/roles.decorator';
+import { Role } from '@prisma/prisma/enums';
+import { DECORATOR } from '../decorators/decorator.enum';
 import { ForbiddenException } from '../exceptions/forbidden.exception';
 
 @Injectable()
@@ -9,8 +10,8 @@ export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.getAllAndOverride<string[]>(
-      ROLES_KEY,
+    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(
+      DECORATOR.ROLES,
       [context.getHandler(), context.getClass()],
     );
 
@@ -20,7 +21,7 @@ export class RolesGuard implements CanActivate {
 
     const request = context
       .switchToHttp()
-      .getRequest<Request & { user?: { role?: string } }>();
+      .getRequest<Request & { user?: { role?: Role } }>();
     const user = request.user;
 
     if (!user || !user.role) {

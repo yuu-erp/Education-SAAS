@@ -1,6 +1,5 @@
 import { SetMetadata } from '@nestjs/common';
-
-export const ROLES_KEY = 'roles';
+import { DECORATOR } from './decorator.enum';
 
 export const Roles = (...roles: string[]): ReturnType<typeof SetMetadata> =>
-  SetMetadata(ROLES_KEY, roles);
+  SetMetadata(DECORATOR.ROLES, roles);

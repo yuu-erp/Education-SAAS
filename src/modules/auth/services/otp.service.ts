@@ -3,6 +3,8 @@ import { PrismaService } from '@/database';
 import { OtpType } from '@prisma/prisma/enums';
 import * as argon2 from 'argon2';
 import * as crypto from 'crypto';
+import { PrismaClient } from '@prisma/prisma/client';
+import { DefaultArgs } from '@prisma/client/runtime/client';
 
 @Injectable()
 export class OtpService {
@@ -22,12 +24,19 @@ export class OtpService {
   /**
    * Generates and stores a new OTP for a user
    */
-  async generateOtp(userId: string, type: OtpType): Promise<string> {
+  async generateOtp(
+    userId: string,
+    type: OtpType,
+    tx: Omit<
+      PrismaClient<never, undefined, DefaultArgs>,
+      '$connect' | '$disconnect' | '$on' | '$use' | '$extends'
+    >,
+  ): Promise<string> {
     const rawCode = this.generateRandomCode();
     const codeHash = await argon2.hash(rawCode);
 
     // Invalidate old unused OTPs of the same type for this user
-    await this.prisma.otpToken.updateMany({
+    await tx.otpToken.updateMany({
       where: {
         userId,
         type,
@@ -43,7 +52,7 @@ export class OtpService {
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + this.OTP_EXPIRY_MINUTES);
 
-    await this.prisma.otpToken.create({
+    await tx.otpToken.create({
       data: {
         userId,
         type,

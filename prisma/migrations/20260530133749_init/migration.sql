@@ -1,13 +1,6 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('OWNER', 'ADMIN', 'TEACHER');
 
-  - You are about to drop the column `password` on the `User` table. All the data in the column will be lost.
-  - A unique constraint covering the columns `[userId,organizationId]` on the table `Membership` will be added. If there are existing duplicate values, this will fail.
-  - A unique constraint covering the columns `[slug]` on the table `Organization` will be added. If there are existing duplicate values, this will fail.
-  - Added the required column `slug` to the `Organization` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `passwordHash` to the `User` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'INVITED', 'SUSPENDED');
 
@@ -15,7 +8,7 @@ CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'INVITED', 'SUSPENDED');
 CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
 
 -- CreateEnum
-CREATE TYPE "SubscriptionPlan" AS ENUM ('BASIC', 'PRO', 'CENTER_PLUS');
+CREATE TYPE "SubscriptionPlan" AS ENUM ('FREE', 'PRO', 'ULTRA');
 
 -- CreateEnum
 CREATE TYPE "SubscriptionStatus" AS ENUM ('TRIAL', 'ACTIVE', 'EXPIRED', 'CANCELED');
@@ -38,30 +31,67 @@ CREATE TYPE "ParentRelationship" AS ENUM ('FATHER', 'MOTHER', 'GUARDIAN', 'OTHER
 -- CreateEnum
 CREATE TYPE "NotificationType" AS ENUM ('SYSTEM', 'ATTENDANCE', 'TUITION', 'ANNOUNCEMENT');
 
--- DropForeignKey
-ALTER TABLE "Membership" DROP CONSTRAINT "Membership_organizationId_fkey";
+-- CreateEnum
+CREATE TYPE "OtpType" AS ENUM ('EMAIL_VERIFICATION', 'PASSWORD_RESET', 'LOGIN_CONFIRMATION');
 
--- DropForeignKey
-ALTER TABLE "Membership" DROP CONSTRAINT "Membership_userId_fkey";
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "passwordHash" TEXT NOT NULL,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "avatarUrl" TEXT,
+    "status" "UserStatus" NOT NULL DEFAULT 'ACTIVE',
+    "emailVerified" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
 
--- AlterTable
-ALTER TABLE "Organization" ADD COLUMN     "address" TEXT,
-ADD COLUMN     "deletedAt" TIMESTAMP(3),
-ADD COLUMN     "email" TEXT,
-ADD COLUMN     "logoUrl" TEXT,
-ADD COLUMN     "phone" TEXT,
-ADD COLUMN     "slug" TEXT NOT NULL,
-ADD COLUMN     "timezone" TEXT NOT NULL DEFAULT 'Asia/Ho_Chi_Minh';
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
--- AlterTable
-ALTER TABLE "User" DROP COLUMN "password",
-ADD COLUMN     "avatarUrl" TEXT,
-ADD COLUMN     "deletedAt" TIMESTAMP(3),
-ADD COLUMN     "emailVerified" BOOLEAN NOT NULL DEFAULT false,
-ADD COLUMN     "firstName" TEXT,
-ADD COLUMN     "lastName" TEXT,
-ADD COLUMN     "passwordHash" TEXT NOT NULL,
-ADD COLUMN     "status" "UserStatus" NOT NULL DEFAULT 'ACTIVE';
+-- CreateTable
+CREATE TABLE "OtpToken" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "type" "OtpType" NOT NULL,
+    "codeHash" TEXT NOT NULL,
+    "attempts" INTEGER NOT NULL DEFAULT 0,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+    "usedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "OtpToken_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Organization" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "logoUrl" TEXT,
+    "phone" TEXT,
+    "email" TEXT,
+    "address" TEXT,
+    "timezone" TEXT NOT NULL DEFAULT 'Asia/Ho_Chi_Minh',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
+
+    CONSTRAINT "Organization_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Membership" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "organizationId" TEXT NOT NULL,
+    "role" "Role" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Membership_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Subscription" (
@@ -234,6 +264,27 @@ CREATE TABLE "Notification" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE INDEX "User_email_idx" ON "User"("email");
+
+-- CreateIndex
+CREATE INDEX "OtpToken_userId_type_idx" ON "OtpToken"("userId", "type");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Organization_slug_key" ON "Organization"("slug");
+
+-- CreateIndex
+CREATE INDEX "Membership_organizationId_idx" ON "Membership"("organizationId");
+
+-- CreateIndex
+CREATE INDEX "Membership_userId_idx" ON "Membership"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Membership_userId_organizationId_key" ON "Membership"("userId", "organizationId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Subscription_organizationId_key" ON "Subscription"("organizationId");
 
 -- CreateIndex
@@ -266,20 +317,8 @@ CREATE INDEX "Invoice_organizationId_idx" ON "Invoice"("organizationId");
 -- CreateIndex
 CREATE INDEX "Notification_organizationId_idx" ON "Notification"("organizationId");
 
--- CreateIndex
-CREATE INDEX "Membership_organizationId_idx" ON "Membership"("organizationId");
-
--- CreateIndex
-CREATE INDEX "Membership_userId_idx" ON "Membership"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Membership_userId_organizationId_key" ON "Membership"("userId", "organizationId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Organization_slug_key" ON "Organization"("slug");
-
--- CreateIndex
-CREATE INDEX "User_email_idx" ON "User"("email");
+-- AddForeignKey
+ALTER TABLE "OtpToken" ADD CONSTRAINT "OtpToken_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Membership" ADD CONSTRAINT "Membership_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

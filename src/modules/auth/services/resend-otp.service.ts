@@ -31,7 +31,11 @@ export class ResendOtpService {
 
     if (user) {
       // Generate OTP and invalidate old ones
-      const token = await this.otpService.generateOtp(user.id, type);
+      const token = await this.otpService.generateOtp(
+        user.id,
+        type,
+        this.prisma,
+      );
 
       const frontendDomain =
         this.configService.get('app.frontendDomain', { infer: true }) ||

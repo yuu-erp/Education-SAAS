@@ -21,8 +21,6 @@ enum Role {
   OWNER
   ADMIN
   TEACHER
-  PARENT
-  STUDENT
 }
 
 enum UserStatus {
@@ -38,9 +36,9 @@ enum Gender {
 }
 
 enum SubscriptionPlan {
-  BASIC
+  FREE
   PRO
-  CENTER_PLUS
+  ULTRA
 }
 
 enum SubscriptionStatus {

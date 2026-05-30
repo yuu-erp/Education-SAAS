@@ -61,13 +61,6 @@ export class AuthController {
   }
 
   @Public()
-  @Post('logout')
-  @HttpCode(HttpStatus.OK)
-  async logout(): Promise<{ message: string }> {
-    return this.loginService.logout();
-  }
-
-  @Public()
   @Post('forgot-password')
   @HttpCode(HttpStatus.OK)
   async forgotPassword(

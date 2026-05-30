@@ -18,8 +18,8 @@ export class TokenService {
   async generateTokens(
     userId: string,
     email: string,
-    organizationId: string,
-    role: Role,
+    organizationId?: string,
+    role?: Role,
   ): Promise<AuthTokens> {
     const payload = { sub: userId, email, organizationId, role };
 
