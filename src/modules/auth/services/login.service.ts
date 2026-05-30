@@ -27,6 +27,10 @@ export class LoginService {
       throw new UnauthorizedException(AUTH_MESSAGES.LOGIN_FAILED);
     }
 
+    if (!user.passwordHash) {
+      throw new UnauthorizedException(AUTH_MESSAGES.LOGIN_FAILED);
+    }
+
     const isPasswordValid = await argon2.verify(
       user.passwordHash,
       loginDto.password,

@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MailModule } from '@/integrations/mail/mail.module';
 import { AuthController } from './controllers/auth.controller';
+import { GoogleAuthController } from './controllers/google-auth.controller';
 import { RegisterService } from './services/register.service';
 import { LoginService } from './services/login.service';
 import { TokenService } from './services/token.service';
@@ -10,8 +11,11 @@ import { PasswordService } from './services/password.service';
 import { OtpService } from './services/otp.service';
 import { VerifyOtpService } from './services/verify-otp.service';
 import { ResendOtpService } from './services/resend-otp.service';
+import { GoogleAuthService } from './services/google-auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { GoogleStrategy } from './strategies/google.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { AllConfigType } from '@/config';
 
 @Module({
@@ -27,7 +31,7 @@ import { AllConfigType } from '@/config';
     }),
     MailModule,
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, GoogleAuthController],
   providers: [
     RegisterService,
     LoginService,
@@ -36,8 +40,11 @@ import { AllConfigType } from '@/config';
     OtpService,
     VerifyOtpService,
     ResendOtpService,
+    GoogleAuthService,
     JwtStrategy,
+    GoogleStrategy,
     JwtAuthGuard,
+    GoogleAuthGuard,
   ],
   exports: [
     RegisterService,
@@ -47,6 +54,7 @@ import { AllConfigType } from '@/config';
     OtpService,
     VerifyOtpService,
     ResendOtpService,
+    GoogleAuthService,
   ],
 })
 export class AuthModule {}

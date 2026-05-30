@@ -19,6 +19,9 @@ export type AuthConfig = {
   jwtExpiresIn: string;
   refreshSecret: string;
   refreshExpiresIn: string;
+  googleClientId?: string;
+  googleClientSecret?: string;
+  googleCallbackUrl?: string;
 };
 
 import { MailConfig } from '../integrations/mail/core/mail.config';
