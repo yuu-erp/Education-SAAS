@@ -21,8 +21,11 @@ export type AuthConfig = {
   refreshExpiresIn: string;
 };
 
+import { MailConfig } from '../integrations/mail/core/mail.config';
+
 export type AllConfigType = {
   app: AppConfig;
   database: DatabaseConfig;
   auth: AuthConfig;
+  mail: MailConfig;
 };
