@@ -6,12 +6,16 @@ import {
   RefreshTokenDto,
   RegisterDto,
   ResetPasswordDto,
+  VerifyOtpDto,
+  ResendOtpDto,
 } from '../dto';
 import { AuthTokens } from '../interfaces';
 import { RegisterService } from '../services/register.service';
 import { LoginService } from '../services/login.service';
 import { TokenService } from '../services/token.service';
 import { PasswordService } from '../services/password.service';
+import { VerifyOtpService } from '../services/verify-otp.service';
+import { ResendOtpService } from '../services/resend-otp.service';
 
 @Controller('auth')
 export class AuthController {
@@ -20,13 +24,33 @@ export class AuthController {
     private readonly loginService: LoginService,
     private readonly tokenService: TokenService,
     private readonly passwordService: PasswordService,
+    private readonly verifyOtpService: VerifyOtpService,
+    private readonly resendOtpService: ResendOtpService,
   ) {}
 
   @Public()
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  async register(@Body() registerDto: RegisterDto): Promise<AuthTokens> {
+  async register(
+    @Body() registerDto: RegisterDto,
+  ): Promise<{ message: string; email: string }> {
     return this.registerService.register(registerDto);
+  }
+
+  @Public()
+  @Post('verify-otp')
+  @HttpCode(HttpStatus.OK)
+  async verifyOtp(@Body() verifyOtpDto: VerifyOtpDto): Promise<AuthTokens> {
+    return this.verifyOtpService.verifyOtp(verifyOtpDto);
+  }
+
+  @Public()
+  @Post('resend-otp')
+  @HttpCode(HttpStatus.OK)
+  async resendOtp(
+    @Body() resendOtpDto: ResendOtpDto,
+  ): Promise<{ message: string }> {
+    return this.resendOtpService.resendOtp(resendOtpDto);
   }
 
   @Public()

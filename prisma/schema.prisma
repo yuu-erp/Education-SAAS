@@ -91,6 +91,12 @@ enum NotificationType {
   ANNOUNCEMENT
 }
 
+enum OtpType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  LOGIN_CONFIRMATION
+}
+
 // ======================================================
 // USERS
 // ======================================================
@@ -105,11 +111,31 @@ model User {
   status        UserStatus   @default(ACTIVE)
   emailVerified Boolean      @default(false)
   memberships   Membership[]
+  otpTokens     OtpToken[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   deletedAt     DateTime?
 
   @@index([email])
+}
+
+// ======================================================
+// OTP TOKENS
+// ======================================================
+
+model OtpToken {
+  id         String   @id @default(cuid())
+  userId     String
+  type       OtpType
+  codeHash   String
+  attempts   Int      @default(0)
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
 }
 
 // ======================================================

@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  OtpToken: 'OtpToken',
   Organization: 'Organization',
   Membership: 'Membership',
   Subscription: 'Subscription',
@@ -414,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "organization" | "membership" | "subscription" | "student" | "parent" | "studentParent" | "teacher" | "class" | "enrollment" | "attendance" | "schedule" | "invoice" | "payment" | "notification"
+    modelProps: "user" | "otpToken" | "organization" | "membership" | "subscription" | "student" | "parent" | "studentParent" | "teacher" | "class" | "enrollment" | "attendance" | "schedule" | "invoice" | "payment" | "notification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -489,6 +490,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    OtpToken: {
+      payload: Prisma.$OtpTokenPayload<ExtArgs>
+      fields: Prisma.OtpTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OtpTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OtpTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.OtpTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OtpTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload>
+        }
+        findMany: {
+          args: Prisma.OtpTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload>[]
+        }
+        create: {
+          args: Prisma.OtpTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload>
+        }
+        createMany: {
+          args: Prisma.OtpTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.OtpTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.OtpTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload>
+        }
+        update: {
+          args: Prisma.OtpTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.OtpTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OtpTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.OtpTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.OtpTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.OtpTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOtpToken>
+        }
+        groupBy: {
+          args: Prisma.OtpTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OtpTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OtpTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OtpTokenCountAggregateOutputType> | number
         }
       }
     }
@@ -1584,6 +1659,20 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const OtpTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  codeHash: 'codeHash',
+  attempts: 'attempts',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type OtpTokenScalarFieldEnum = (typeof OtpTokenScalarFieldEnum)[keyof typeof OtpTokenScalarFieldEnum]
+
+
 export const OrganizationScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1862,6 +1951,34 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'OtpType'
+ */
+export type EnumOtpTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OtpType'>
+    
+
+
+/**
+ * Reference to a field of type 'OtpType[]'
+ */
+export type ListEnumOtpTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OtpType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'Role'
  */
 export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
@@ -1928,20 +2045,6 @@ export type EnumParentRelationshipFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'ParentRelationship[]'
  */
 export type ListEnumParentRelationshipFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ParentRelationship[]'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -2153,6 +2256,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  otpToken?: Prisma.OtpTokenOmit
   organization?: Prisma.OrganizationOmit
   membership?: Prisma.MembershipOmit
   subscription?: Prisma.SubscriptionOmit
