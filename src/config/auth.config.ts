@@ -39,22 +39,22 @@ export default registerAs<AuthConfig>('auth', () => {
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
     REFRESH_SECRET: process.env.REFRESH_SECRET,
     REFRESH_EXPIRES_IN: process.env.REFRESH_EXPIRES_IN,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-    GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || undefined,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || undefined,
+    GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL || undefined,
   };
 
   validateConfig(env, EnvironmentVariablesValidator);
 
   return {
-    jwtSecret: env.JWT_SECRET ?? 'secretKey',
-    jwtExpiresIn: env.JWT_EXPIRES_IN ?? '15m',
-    refreshSecret: env.REFRESH_SECRET ?? 'refreshSecretKey',
-    refreshExpiresIn: env.REFRESH_EXPIRES_IN ?? '7d',
+    jwtSecret: env.JWT_SECRET || 'secretKey',
+    jwtExpiresIn: env.JWT_EXPIRES_IN || '15m',
+    refreshSecret: env.REFRESH_SECRET || 'refreshSecretKey',
+    refreshExpiresIn: env.REFRESH_EXPIRES_IN || '7d',
     googleClientId: env.GOOGLE_CLIENT_ID,
     googleClientSecret: env.GOOGLE_CLIENT_SECRET,
     googleCallbackUrl:
-      env.GOOGLE_CALLBACK_URL ??
+      env.GOOGLE_CALLBACK_URL ||
       'http://localhost:3000/api/auth/google/callback',
   };
 });

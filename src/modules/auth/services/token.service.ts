@@ -1,10 +1,11 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { AllConfigType } from '@/config';
 import { AuthTokens } from '../interfaces';
 import { Role } from '@prisma/prisma/enums';
 import { RefreshTokenDto } from '../dto';
+import { PrismaService } from '@/database';
 
 @Injectable()
 export class TokenService {
@@ -13,6 +14,7 @@ export class TokenService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService<AllConfigType>,
+    private readonly prisma: PrismaService,
   ) {}
 
   async generateTokens(
@@ -44,15 +46,46 @@ export class TokenService {
     };
   }
 
-  /* eslint-disable @typescript-eslint/require-await */
   async refreshToken(refreshTokenDto: RefreshTokenDto): Promise<AuthTokens> {
-    this.logger.log(
-      `[AUTH] REFRESH TOKEN attempt: ${refreshTokenDto.refreshToken}`,
-    );
+    this.logger.log(`[AUTH] REFRESH TOKEN attempt`);
 
-    return {
-      accessToken: 'mock-access-token-new',
-      refreshToken: 'mock-refresh-token-new',
-    };
+    try {
+      const refreshSecret =
+        (this.configService as ConfigService).get<string>(
+          'auth.refreshSecret',
+        ) || '';
+
+      const payload: { sub: string } = await this.jwtService.verifyAsync(
+        refreshTokenDto.refreshToken,
+        {
+          secret: refreshSecret,
+        },
+      );
+
+      const userId = payload.sub;
+
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        include: { memberships: true },
+      });
+
+      if (!user || user.status !== 'ACTIVE') {
+        throw new UnauthorizedException('User is inactive or does not exist');
+      }
+
+      const primaryMembership = user.memberships[0];
+
+      return this.generateTokens(
+        user.id,
+        user.email,
+        primaryMembership?.organizationId,
+        primaryMembership?.role,
+      );
+    } catch (error) {
+      this.logger.error(
+        `[AUTH] Refresh token failed: ${(error as Error).message}`,
+      );
+      throw new UnauthorizedException('Invalid or expired refresh token');
+    }
   }
 }
