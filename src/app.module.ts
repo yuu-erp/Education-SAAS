@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { appConfig, databaseConfig } from '@/config';
+import { appConfig, authConfig, databaseConfig } from '@/config';
 import { PrismaModule } from '@/database';
 import { AuthModule } from '@/modules/auth/auth.module';
 import { StudentsModule } from '@/modules/students/students.module';
@@ -9,7 +9,7 @@ import { StudentsModule } from '@/modules/students/students.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, databaseConfig],
+      load: [appConfig, databaseConfig, authConfig],
       envFilePath: ['.env'],
     }),
     PrismaModule,

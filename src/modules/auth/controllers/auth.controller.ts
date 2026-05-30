@@ -8,34 +8,39 @@ import {
   ResetPasswordDto,
 } from '../dto';
 import { AuthTokens } from '../interfaces';
-import { AuthService } from '../services/auth.service';
+import { RegisterService } from '../services/register.service';
+import { LoginService } from '../services/login.service';
+import { TokenService } from '../services/token.service';
+import { PasswordService } from '../services/password.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly registerService: RegisterService,
+    private readonly loginService: LoginService,
+    private readonly tokenService: TokenService,
+    private readonly passwordService: PasswordService,
+  ) {}
 
   @Public()
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() registerDto: RegisterDto): Promise<AuthTokens> {
-    return this.authService.register(registerDto);
+    return this.registerService.register(registerDto);
   }
 
   @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() loginDto: LoginDto): Promise<AuthTokens> {
-    return this.authService.login(loginDto);
+    return this.loginService.login(loginDto);
   }
 
-  // Currently we just let it pass or you can require token.
-  // We'll mark it public for testing without auth guard for now,
-  // or you can remove @Public() once JWT is fully implemented.
   @Public()
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   async logout(): Promise<{ message: string }> {
-    return this.authService.logout();
+    return this.loginService.logout();
   }
 
   @Public()
@@ -44,7 +49,7 @@ export class AuthController {
   async forgotPassword(
     @Body() forgotPasswordDto: ForgotPasswordDto,
   ): Promise<{ message: string }> {
-    return this.authService.forgotPassword(forgotPasswordDto);
+    return this.passwordService.forgotPassword(forgotPasswordDto);
   }
 
   @Public()
@@ -53,13 +58,13 @@ export class AuthController {
   async resetPassword(
     @Body() resetPasswordDto: ResetPasswordDto,
   ): Promise<{ message: string }> {
-    return this.authService.resetPassword(resetPasswordDto);
+    return this.passwordService.resetPassword(resetPasswordDto);
   }
 
   @Public()
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
   async refresh(@Body() refreshTokenDto: RefreshTokenDto): Promise<AuthTokens> {
-    return this.authService.refreshToken(refreshTokenDto);
+    return this.tokenService.refreshToken(refreshTokenDto);
   }
 }

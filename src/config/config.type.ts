@@ -10,11 +10,19 @@ export interface AppConfig {
   headerLanguage: string;
 }
 
-export interface DatabaseConfig {
+export type DatabaseConfig = {
   url: string;
-}
+};
+
+export type AuthConfig = {
+  jwtSecret: string;
+  jwtExpiresIn: string;
+  refreshSecret: string;
+  refreshExpiresIn: string;
+};
 
 export type AllConfigType = {
   app: AppConfig;
   database: DatabaseConfig;
+  auth: AuthConfig;
 };
