@@ -1,3 +1,3 @@
 export * from './organization.module';
-export * from './services/organization.service';
+export * from './services';
 export * from './dto';

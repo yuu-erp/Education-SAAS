@@ -1,39 +1,51 @@
 import {
-  Body,
   Controller,
-  Delete,
-  Get,
-  Param,
   Post,
-  Put,
+  Get,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
 } from '@nestjs/common';
-import { OrganizationService } from '../services/organization.service';
+import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
+import { CurrentUser } from '@/common/decorators/current-user.decorator';
+import type { RequestUser } from '@/common/types';
 import { CreateOrganizationDto, UpdateOrganizationDto } from '../dto';
+import {
+  CreateOrganizationService,
+  GetOrganizationService,
+  UpdateOrganizationService,
+  DeleteOrganizationService,
+} from '../services';
 
-@Controller('organization')
+@Controller('organizations')
+@UseGuards(JwtAuthGuard)
 export class OrganizationController {
-  constructor(private readonly organizationService: OrganizationService) {}
+  constructor(
+    private readonly createOrganizationService: CreateOrganizationService,
+    private readonly getOrganizationService: GetOrganizationService,
+    private readonly updateOrganizationService: UpdateOrganizationService,
+    private readonly deleteOrganizationService: DeleteOrganizationService,
+  ) {}
 
   @Post()
-  create(@Body() createOrganizationDto: CreateOrganizationDto) {
-    return this.organizationService.create(createOrganizationDto);
+  create(@CurrentUser() user: RequestUser, @Body() dto: CreateOrganizationDto) {
+    return this.createOrganizationService.execute(user.id as string, dto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.organizationService.findOne(id);
+    return this.getOrganizationService.execute(id);
   }
 
-  @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateOrganizationDto: UpdateOrganizationDto,
-  ) {
-    return this.organizationService.update(id, updateOrganizationDto);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() dto: UpdateOrganizationDto) {
+    return this.updateOrganizationService.execute(id, dto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.organizationService.remove(id);
+    return this.deleteOrganizationService.execute(id);
   }
 }

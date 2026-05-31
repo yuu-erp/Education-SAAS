@@ -1,36 +1,42 @@
 import {
-  IsEmail,
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsEmail,
   Matches,
+  MaxLength,
 } from 'class-validator';
 
 export class CreateOrganizationDto {
   @IsNotEmpty()
   @IsString()
-  readonly name!: string;
+  @MaxLength(255)
+  name: string;
 
   @IsNotEmpty()
   @IsString()
   @Matches(/^[a-z0-9-]+$/, {
-    message: 'Slug must contain only lowercase letters, numbers, and hyphens.',
+    message: 'Slug chỉ được chứa chữ thường, số và dấu gạch ngang',
   })
-  readonly slug!: string;
+  slug: string;
 
   @IsOptional()
   @IsString()
-  readonly logoUrl?: string;
+  logoUrl?: string;
 
   @IsOptional()
   @IsString()
-  readonly phone?: string;
+  phone?: string;
 
   @IsOptional()
   @IsEmail()
-  readonly email?: string;
+  email?: string;
 
   @IsOptional()
   @IsString()
-  readonly address?: string;
+  address?: string;
+
+  @IsOptional()
+  @IsString()
+  timezone?: string;
 }

@@ -1,10 +1,25 @@
 import { Module } from '@nestjs/common';
 import { OrganizationController } from './controllers/organization.controller';
-import { OrganizationService } from './services/organization.service';
+import {
+  CreateOrganizationService,
+  GetOrganizationService,
+  UpdateOrganizationService,
+  DeleteOrganizationService,
+} from './services';
 
 @Module({
   controllers: [OrganizationController],
-  providers: [OrganizationService],
-  exports: [OrganizationService],
+  providers: [
+    CreateOrganizationService,
+    GetOrganizationService,
+    UpdateOrganizationService,
+    DeleteOrganizationService,
+  ],
+  exports: [
+    CreateOrganizationService,
+    GetOrganizationService,
+    UpdateOrganizationService,
+    DeleteOrganizationService,
+  ],
 })
 export class OrganizationModule {}
