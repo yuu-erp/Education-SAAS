@@ -67,7 +67,8 @@ export const ModelName = {
   Schedule: 'Schedule',
   Invoice: 'Invoice',
   Payment: 'Payment',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  File: 'File'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -325,6 +326,20 @@ export const NotificationScalarFieldEnum = {
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const FileScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  key: 'key',
+  filename: 'filename',
+  mimeType: 'mimeType',
+  size: 'size',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type FileScalarFieldEnum = (typeof FileScalarFieldEnum)[keyof typeof FileScalarFieldEnum]
 
 
 export const SortOrder = {

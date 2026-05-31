@@ -111,6 +111,7 @@ model User {
   memberships    Membership[]
   otpTokens      OtpToken[]
   socialAccounts SocialAccount[]
+  files          File[]
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   deletedAt      DateTime?
@@ -423,4 +424,22 @@ model Notification {
   createdAt      DateTime         @default(now())
 
   @@index([organizationId])
+}
+
+// ======================================================
+// FILES
+// ======================================================
+model File {
+  id        String   @id @default(cuid())
+  url       String
+  key       String
+  filename  String
+  mimeType  String
+  size      Int
+  userId    String?
+  createdAt DateTime @default(now())
+
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
 }

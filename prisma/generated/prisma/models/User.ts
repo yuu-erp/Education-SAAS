@@ -233,6 +233,7 @@ export type UserWhereInput = {
   memberships?: Prisma.MembershipListRelationFilter
   otpTokens?: Prisma.OtpTokenListRelationFilter
   socialAccounts?: Prisma.SocialAccountListRelationFilter
+  files?: Prisma.FileListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -250,6 +251,7 @@ export type UserOrderByWithRelationInput = {
   memberships?: Prisma.MembershipOrderByRelationAggregateInput
   otpTokens?: Prisma.OtpTokenOrderByRelationAggregateInput
   socialAccounts?: Prisma.SocialAccountOrderByRelationAggregateInput
+  files?: Prisma.FileOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -270,6 +272,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   memberships?: Prisma.MembershipListRelationFilter
   otpTokens?: Prisma.OtpTokenListRelationFilter
   socialAccounts?: Prisma.SocialAccountListRelationFilter
+  files?: Prisma.FileListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -321,6 +324,7 @@ export type UserCreateInput = {
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   otpTokens?: Prisma.OtpTokenCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
+  files?: Prisma.FileCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -338,6 +342,7 @@ export type UserUncheckedCreateInput = {
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   otpTokens?: Prisma.OtpTokenUncheckedCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -355,6 +360,7 @@ export type UserUpdateInput = {
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   otpTokens?: Prisma.OtpTokenUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
+  files?: Prisma.FileUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -372,6 +378,7 @@ export type UserUncheckedUpdateInput = {
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   otpTokens?: Prisma.OtpTokenUncheckedUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -463,6 +470,11 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -529,6 +541,22 @@ export type UserUpdateOneRequiredWithoutMembershipsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMembershipsInput, Prisma.UserUpdateWithoutMembershipsInput>, Prisma.UserUncheckedUpdateWithoutMembershipsInput>
 }
 
+export type UserCreateNestedOneWithoutFilesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFilesInput, Prisma.UserUncheckedCreateWithoutFilesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFilesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutFilesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFilesInput, Prisma.UserUncheckedCreateWithoutFilesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFilesInput
+  upsert?: Prisma.UserUpsertWithoutFilesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFilesInput, Prisma.UserUpdateWithoutFilesInput>, Prisma.UserUncheckedUpdateWithoutFilesInput>
+}
+
 export type UserCreateWithoutSocialAccountsInput = {
   id?: string
   email: string
@@ -543,6 +571,7 @@ export type UserCreateWithoutSocialAccountsInput = {
   deletedAt?: Date | string | null
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   otpTokens?: Prisma.OtpTokenCreateNestedManyWithoutUserInput
+  files?: Prisma.FileCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSocialAccountsInput = {
@@ -559,6 +588,7 @@ export type UserUncheckedCreateWithoutSocialAccountsInput = {
   deletedAt?: Date | string | null
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   otpTokens?: Prisma.OtpTokenUncheckedCreateNestedManyWithoutUserInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSocialAccountsInput = {
@@ -591,6 +621,7 @@ export type UserUpdateWithoutSocialAccountsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   otpTokens?: Prisma.OtpTokenUpdateManyWithoutUserNestedInput
+  files?: Prisma.FileUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSocialAccountsInput = {
@@ -607,6 +638,7 @@ export type UserUncheckedUpdateWithoutSocialAccountsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   otpTokens?: Prisma.OtpTokenUncheckedUpdateManyWithoutUserNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOtpTokensInput = {
@@ -623,6 +655,7 @@ export type UserCreateWithoutOtpTokensInput = {
   deletedAt?: Date | string | null
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
+  files?: Prisma.FileCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOtpTokensInput = {
@@ -639,6 +672,7 @@ export type UserUncheckedCreateWithoutOtpTokensInput = {
   deletedAt?: Date | string | null
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOtpTokensInput = {
@@ -671,6 +705,7 @@ export type UserUpdateWithoutOtpTokensInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
+  files?: Prisma.FileUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpTokensInput = {
@@ -687,6 +722,7 @@ export type UserUncheckedUpdateWithoutOtpTokensInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMembershipsInput = {
@@ -703,6 +739,7 @@ export type UserCreateWithoutMembershipsInput = {
   deletedAt?: Date | string | null
   otpTokens?: Prisma.OtpTokenCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
+  files?: Prisma.FileCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -719,6 +756,7 @@ export type UserUncheckedCreateWithoutMembershipsInput = {
   deletedAt?: Date | string | null
   otpTokens?: Prisma.OtpTokenUncheckedCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -751,6 +789,7 @@ export type UserUpdateWithoutMembershipsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   otpTokens?: Prisma.OtpTokenUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
+  files?: Prisma.FileUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -767,6 +806,91 @@ export type UserUncheckedUpdateWithoutMembershipsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   otpTokens?: Prisma.OtpTokenUncheckedUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFilesInput = {
+  id?: string
+  email: string
+  passwordHash?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  avatarUrl?: string | null
+  status?: $Enums.UserStatus
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
+  otpTokens?: Prisma.OtpTokenCreateNestedManyWithoutUserInput
+  socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFilesInput = {
+  id?: string
+  email: string
+  passwordHash?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  avatarUrl?: string | null
+  status?: $Enums.UserStatus
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
+  otpTokens?: Prisma.OtpTokenUncheckedCreateNestedManyWithoutUserInput
+  socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFilesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFilesInput, Prisma.UserUncheckedCreateWithoutFilesInput>
+}
+
+export type UserUpsertWithoutFilesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFilesInput, Prisma.UserUncheckedUpdateWithoutFilesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFilesInput, Prisma.UserUncheckedCreateWithoutFilesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFilesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFilesInput, Prisma.UserUncheckedUpdateWithoutFilesInput>
+}
+
+export type UserUpdateWithoutFilesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
+  otpTokens?: Prisma.OtpTokenUpdateManyWithoutUserNestedInput
+  socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFilesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
+  otpTokens?: Prisma.OtpTokenUncheckedUpdateManyWithoutUserNestedInput
+  socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -778,12 +902,14 @@ export type UserCountOutputType = {
   memberships: number
   otpTokens: number
   socialAccounts: number
+  files: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | UserCountOutputTypeCountMembershipsArgs
   otpTokens?: boolean | UserCountOutputTypeCountOtpTokensArgs
   socialAccounts?: boolean | UserCountOutputTypeCountSocialAccountsArgs
+  files?: boolean | UserCountOutputTypeCountFilesArgs
 }
 
 /**
@@ -817,6 +943,13 @@ export type UserCountOutputTypeCountSocialAccountsArgs<ExtArgs extends runtime.T
   where?: Prisma.SocialAccountWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FileWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -833,6 +966,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   memberships?: boolean | Prisma.User$membershipsArgs<ExtArgs>
   otpTokens?: boolean | Prisma.User$otpTokensArgs<ExtArgs>
   socialAccounts?: boolean | Prisma.User$socialAccountsArgs<ExtArgs>
+  files?: boolean | Prisma.User$filesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -883,6 +1017,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   memberships?: boolean | Prisma.User$membershipsArgs<ExtArgs>
   otpTokens?: boolean | Prisma.User$otpTokensArgs<ExtArgs>
   socialAccounts?: boolean | Prisma.User$socialAccountsArgs<ExtArgs>
+  files?: boolean | Prisma.User$filesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -894,6 +1029,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     memberships: Prisma.$MembershipPayload<ExtArgs>[]
     otpTokens: Prisma.$OtpTokenPayload<ExtArgs>[]
     socialAccounts: Prisma.$SocialAccountPayload<ExtArgs>[]
+    files: Prisma.$FilePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1304,6 +1440,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   memberships<T extends Prisma.User$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   otpTokens<T extends Prisma.User$otpTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtpTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   socialAccounts<T extends Prisma.User$socialAccountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$socialAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SocialAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  files<T extends Prisma.User$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1806,6 +1943,30 @@ export type User$socialAccountsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.SocialAccountScalarFieldEnum | Prisma.SocialAccountScalarFieldEnum[]
+}
+
+/**
+ * User.files
+ */
+export type User$filesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the File
+   */
+  select?: Prisma.FileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the File
+   */
+  omit?: Prisma.FileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
+  where?: Prisma.FileWhereInput
+  orderBy?: Prisma.FileOrderByWithRelationInput | Prisma.FileOrderByWithRelationInput[]
+  cursor?: Prisma.FileWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FileScalarFieldEnum | Prisma.FileScalarFieldEnum[]
 }
 
 /**

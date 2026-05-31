@@ -102,3 +102,8 @@ export type Payment = Prisma.PaymentModel
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model File
+ * 
+ */
+export type File = Prisma.FileModel
