@@ -19,6 +19,19 @@ export class ChangeAvatarService {
       throw new NotFoundException('User not found');
     }
 
+    if (user.avatarUrl) {
+      const oldFile = await this.prisma.file.findFirst({
+        where: { url: user.avatarUrl, userId },
+      });
+      if (oldFile) {
+        try {
+          await this.filesService.deleteFile(oldFile.id, userId);
+        } catch {
+          // Ignore delete errors, continue to upload new one
+        }
+      }
+    }
+
     // Upload the new avatar
     const uploadedFile = await this.filesService.uploadFile(
       file,
