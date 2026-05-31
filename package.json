@@ -22,7 +22,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:backup": "source .env && pg_dump \"$DATABASE_URL\" > backup.sql",
-    "prisma:migrate:safe": "yarn prisma:backup && yarn prisma:migrate && yarn prisma:generate"
+    "prisma:migrate:safe": "yarn prisma:backup && yarn prisma:migrate && yarn prisma:generate",
+    "prisma:seed": "prisma db seed"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -104,5 +105,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
