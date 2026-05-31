@@ -60,6 +60,7 @@ export class LoginService {
     return this.tokenService.generateTokens(
       user.id,
       user.email,
+      user.systemRole,
       organizationId,
       role,
     );

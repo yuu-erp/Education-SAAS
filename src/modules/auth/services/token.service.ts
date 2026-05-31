@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { AllConfigType } from '@/config';
 import { AuthTokens } from '../interfaces';
-import { Role } from '@prisma/prisma/enums';
+import { Role, SystemRole } from '@prisma/prisma/enums';
 import { RefreshTokenDto } from '../dto';
 import { PrismaService } from '@/database';
 
@@ -20,10 +20,11 @@ export class TokenService {
   async generateTokens(
     userId: string,
     email: string,
+    systemRole: SystemRole,
     organizationId?: string,
     role?: Role,
   ): Promise<AuthTokens> {
-    const payload = { sub: userId, email, organizationId, role };
+    const payload = { sub: userId, email, systemRole, organizationId, role };
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload),
@@ -78,6 +79,7 @@ export class TokenService {
       return this.generateTokens(
         user.id,
         user.email,
+        user.systemRole,
         primaryMembership?.organizationId,
         primaryMembership?.role,
       );

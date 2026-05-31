@@ -4,4 +4,5 @@ export enum DECORATOR {
   IDENTIFY_CACHE_KEY = 'identifyCacheKey',
   CACHE_TTL = 'cacheTTL',
   ROLES = 'roles',
+  SYSTEM_ROLES = 'systemRoles',
 }

@@ -50,6 +50,7 @@ export class VerifyOtpService {
     return this.tokenService.generateTokens(
       user.id,
       user.email,
+      user.systemRole,
       primaryMembership?.organizationId || '',
       primaryMembership?.role || 'STUDENT',
     );

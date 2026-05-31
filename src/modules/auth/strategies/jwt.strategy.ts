@@ -4,11 +4,13 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { AllConfigType } from '@/config';
 import { RequestUser } from '@/common/types';
+import { Role, SystemRole } from '@prisma/prisma/enums';
 
 type JwtPayload = {
   sub: string;
   email: string;
-  role: string;
+  role: Role;
+  systemRole: SystemRole;
   organizationId?: string;
 };
 
@@ -31,6 +33,8 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     return {
       id: payload.sub,
       email: payload.email,
+      systemRole: payload.systemRole,
+      organizationId: payload.organizationId,
       role: payload.role,
     };
   }

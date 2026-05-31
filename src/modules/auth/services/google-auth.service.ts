@@ -58,6 +58,7 @@ export class GoogleAuthService {
       const tokens = await this.tokenService.generateTokens(
         user.id,
         user.email,
+        user.systemRole,
         organizationId,
         role,
       );
@@ -104,6 +105,7 @@ export class GoogleAuthService {
       const tokens = await this.tokenService.generateTokens(
         existingUser.id,
         existingUser.email,
+        existingUser.systemRole,
         organizationId,
         role,
       );
@@ -142,6 +144,7 @@ export class GoogleAuthService {
     const tokens = await this.tokenService.generateTokens(
       user.id,
       user.email,
+      user.systemRole,
       undefined,
       undefined,
     );

@@ -36,6 +36,7 @@ export type UserMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  systemRole: $Enums.SystemRole | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -50,6 +51,7 @@ export type UserMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  systemRole: $Enums.SystemRole | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -64,6 +66,7 @@ export type UserCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   deletedAt: number
+  systemRole: number
   _all: number
 }
 
@@ -80,6 +83,7 @@ export type UserMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  systemRole?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -94,6 +98,7 @@ export type UserMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  systemRole?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -108,6 +113,7 @@ export type UserCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  systemRole?: true
   _all?: true
 }
 
@@ -195,6 +201,7 @@ export type UserGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
+  systemRole: $Enums.SystemRole
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -230,6 +237,7 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFilter<"User"> | $Enums.SystemRole
   memberships?: Prisma.MembershipListRelationFilter
   otpTokens?: Prisma.OtpTokenListRelationFilter
   socialAccounts?: Prisma.SocialAccountListRelationFilter
@@ -248,6 +256,7 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  systemRole?: Prisma.SortOrder
   memberships?: Prisma.MembershipOrderByRelationAggregateInput
   otpTokens?: Prisma.OtpTokenOrderByRelationAggregateInput
   socialAccounts?: Prisma.SocialAccountOrderByRelationAggregateInput
@@ -269,6 +278,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFilter<"User"> | $Enums.SystemRole
   memberships?: Prisma.MembershipListRelationFilter
   otpTokens?: Prisma.OtpTokenListRelationFilter
   socialAccounts?: Prisma.SocialAccountListRelationFilter
@@ -287,6 +297,7 @@ export type UserOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  systemRole?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -307,6 +318,7 @@ export type UserScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleWithAggregatesFilter<"User"> | $Enums.SystemRole
 }
 
 export type UserCreateInput = {
@@ -321,6 +333,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   otpTokens?: Prisma.OtpTokenCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
@@ -339,6 +352,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   otpTokens?: Prisma.OtpTokenUncheckedCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
@@ -357,6 +371,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   otpTokens?: Prisma.OtpTokenUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
@@ -375,6 +390,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   otpTokens?: Prisma.OtpTokenUncheckedUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -393,6 +409,7 @@ export type UserCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
 }
 
 export type UserUpdateManyMutationInput = {
@@ -407,6 +424,7 @@ export type UserUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -421,6 +439,7 @@ export type UserUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -435,6 +454,7 @@ export type UserCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  systemRole?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -449,6 +469,7 @@ export type UserMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  systemRole?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -463,6 +484,7 @@ export type UserMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  systemRole?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -497,6 +519,10 @@ export type DateTimeFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type EnumSystemRoleFieldUpdateOperationsInput = {
+  set?: $Enums.SystemRole
 }
 
 export type UserCreateNestedOneWithoutSocialAccountsInput = {
@@ -569,6 +595,7 @@ export type UserCreateWithoutSocialAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   otpTokens?: Prisma.OtpTokenCreateNestedManyWithoutUserInput
   files?: Prisma.FileCreateNestedManyWithoutUserInput
@@ -586,6 +613,7 @@ export type UserUncheckedCreateWithoutSocialAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   otpTokens?: Prisma.OtpTokenUncheckedCreateNestedManyWithoutUserInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
@@ -619,6 +647,7 @@ export type UserUpdateWithoutSocialAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   otpTokens?: Prisma.OtpTokenUpdateManyWithoutUserNestedInput
   files?: Prisma.FileUpdateManyWithoutUserNestedInput
@@ -636,6 +665,7 @@ export type UserUncheckedUpdateWithoutSocialAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   otpTokens?: Prisma.OtpTokenUncheckedUpdateManyWithoutUserNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
@@ -653,6 +683,7 @@ export type UserCreateWithoutOtpTokensInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
   files?: Prisma.FileCreateNestedManyWithoutUserInput
@@ -670,6 +701,7 @@ export type UserUncheckedCreateWithoutOtpTokensInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
@@ -703,6 +735,7 @@ export type UserUpdateWithoutOtpTokensInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
   files?: Prisma.FileUpdateManyWithoutUserNestedInput
@@ -720,6 +753,7 @@ export type UserUncheckedUpdateWithoutOtpTokensInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
@@ -737,6 +771,7 @@ export type UserCreateWithoutMembershipsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
   otpTokens?: Prisma.OtpTokenCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
   files?: Prisma.FileCreateNestedManyWithoutUserInput
@@ -754,6 +789,7 @@ export type UserUncheckedCreateWithoutMembershipsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
   otpTokens?: Prisma.OtpTokenUncheckedCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
@@ -787,6 +823,7 @@ export type UserUpdateWithoutMembershipsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
   otpTokens?: Prisma.OtpTokenUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
   files?: Prisma.FileUpdateManyWithoutUserNestedInput
@@ -804,6 +841,7 @@ export type UserUncheckedUpdateWithoutMembershipsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
   otpTokens?: Prisma.OtpTokenUncheckedUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
@@ -821,6 +859,7 @@ export type UserCreateWithoutFilesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   otpTokens?: Prisma.OtpTokenCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountCreateNestedManyWithoutUserInput
@@ -838,6 +877,7 @@ export type UserUncheckedCreateWithoutFilesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  systemRole?: $Enums.SystemRole
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   otpTokens?: Prisma.OtpTokenUncheckedCreateNestedManyWithoutUserInput
   socialAccounts?: Prisma.SocialAccountUncheckedCreateNestedManyWithoutUserInput
@@ -871,6 +911,7 @@ export type UserUpdateWithoutFilesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   otpTokens?: Prisma.OtpTokenUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUpdateManyWithoutUserNestedInput
@@ -888,6 +929,7 @@ export type UserUncheckedUpdateWithoutFilesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  systemRole?: Prisma.EnumSystemRoleFieldUpdateOperationsInput | $Enums.SystemRole
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   otpTokens?: Prisma.OtpTokenUncheckedUpdateManyWithoutUserNestedInput
   socialAccounts?: Prisma.SocialAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -963,6 +1005,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  systemRole?: boolean
   memberships?: boolean | Prisma.User$membershipsArgs<ExtArgs>
   otpTokens?: boolean | Prisma.User$otpTokensArgs<ExtArgs>
   socialAccounts?: boolean | Prisma.User$socialAccountsArgs<ExtArgs>
@@ -982,6 +1025,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  systemRole?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -996,6 +1040,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  systemRole?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -1010,9 +1055,10 @@ export type UserSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  systemRole?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "firstName" | "lastName" | "avatarUrl" | "status" | "emailVerified" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "firstName" | "lastName" | "avatarUrl" | "status" | "emailVerified" | "createdAt" | "updatedAt" | "deletedAt" | "systemRole", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | Prisma.User$membershipsArgs<ExtArgs>
   otpTokens?: boolean | Prisma.User$otpTokensArgs<ExtArgs>
@@ -1043,6 +1089,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
+    systemRole: $Enums.SystemRole
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1481,6 +1528,7 @@ export interface UserFieldRefs {
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly systemRole: Prisma.FieldRef<"User", 'SystemRole'>
 }
     
 

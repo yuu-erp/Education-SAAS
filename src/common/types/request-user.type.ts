@@ -1,6 +1,10 @@
+import { Role } from '@prisma/prisma/enums';
+
 export type RequestUser = {
   id: string | number;
   email: string;
-  role: string;
-  [key: string]: unknown;
+  systemRole: string;
+
+  role?: Role;
+  organizationId?: string;
 };

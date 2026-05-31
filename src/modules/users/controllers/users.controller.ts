@@ -35,6 +35,7 @@ export class UsersController {
 
   @Get()
   getProfile(@CurrentUser() user: RequestUser) {
+    console.log('user', user);
     return this.getProfileService.execute(user.id as string);
   }
 

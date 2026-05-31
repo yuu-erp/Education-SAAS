@@ -18,7 +18,7 @@ export class PrismaService
       connectionString,
       max: 20,
       idleTimeoutMillis: 30_000,
-      connectionTimeoutMillis: 2_000,
+      connectionTimeoutMillis: 10_000, // Tăng lên 10s (hoặc có thể xóa đi)
     });
 
     const adapter = new PrismaPg(pool);

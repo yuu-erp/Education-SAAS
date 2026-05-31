@@ -9,6 +9,14 @@
 * 🟢 You can import this file directly.
 */
 
+export const SystemRole = {
+  USER: 'USER',
+  SUPER_ADMIN: 'SUPER_ADMIN'
+} as const
+
+export type SystemRole = (typeof SystemRole)[keyof typeof SystemRole]
+
+
 export const Role = {
   OWNER: 'OWNER',
   ADMIN: 'ADMIN',
