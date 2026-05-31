@@ -11,10 +11,10 @@ import { PasswordService } from './services/password.service';
 import { OtpService } from './services/otp.service';
 import { VerifyOtpService } from './services/verify-otp.service';
 import { ResendOtpService } from './services/resend-otp.service';
+import { LogoutService } from './services/logout.service';
 import { GoogleAuthService } from './services/google-auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { AllConfigType } from '@/config';
 
@@ -40,10 +40,10 @@ import { AllConfigType } from '@/config';
     OtpService,
     VerifyOtpService,
     ResendOtpService,
+    LogoutService,
     GoogleAuthService,
     JwtStrategy,
     GoogleStrategy,
-    JwtAuthGuard,
     GoogleAuthGuard,
   ],
   exports: [
@@ -54,6 +54,7 @@ import { AllConfigType } from '@/config';
     OtpService,
     VerifyOtpService,
     ResendOtpService,
+    LogoutService,
     GoogleAuthService,
   ],
 })

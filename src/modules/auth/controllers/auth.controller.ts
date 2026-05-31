@@ -1,5 +1,14 @@
-import { Public } from '@/common/decorators';
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { CurrentUser, Public } from '@/common/decorators';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { JwtAuthGuard } from '@/common/guards';
+import type { RequestUser } from '@/common/types';
 import {
   ForgotPasswordDto,
   LoginDto,
@@ -16,6 +25,7 @@ import { TokenService } from '../services/token.service';
 import { PasswordService } from '../services/password.service';
 import { VerifyOtpService } from '../services/verify-otp.service';
 import { ResendOtpService } from '../services/resend-otp.service';
+import { LogoutService } from '../services/logout.service';
 
 @Controller('auth')
 export class AuthController {
@@ -26,6 +36,7 @@ export class AuthController {
     private readonly passwordService: PasswordService,
     private readonly verifyOtpService: VerifyOtpService,
     private readonly resendOtpService: ResendOtpService,
+    private readonly logoutService: LogoutService,
   ) {}
 
   @Public()
@@ -83,5 +94,12 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async refresh(@Body() refreshTokenDto: RefreshTokenDto): Promise<AuthTokens> {
     return this.tokenService.refreshToken(refreshTokenDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  async logout(@CurrentUser() user: RequestUser): Promise<{ message: string }> {
+    return this.logoutService.logout(user.id as string);
   }
 }
