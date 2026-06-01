@@ -1,22 +1,24 @@
+import { AllConfigType } from '@/config';
+import { MailModule } from '@/integrations/mail/mail.module';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { MailModule } from '@/integrations/mail/mail.module';
 import { AuthController } from './controllers/auth.controller';
 import { GoogleAuthController } from './controllers/google-auth.controller';
-import { RegisterService } from './services/register.service';
-import { LoginService } from './services/login.service';
-import { TokenService } from './services/token.service';
-import { PasswordService } from './services/password.service';
-import { OtpService } from './services/otp.service';
-import { VerifyOtpService } from './services/verify-otp.service';
-import { ResendOtpService } from './services/resend-otp.service';
-import { LogoutService } from './services/logout.service';
-import { GoogleAuthService } from './services/google-auth.service';
-import { JwtStrategy } from './strategies/jwt.strategy';
-import { GoogleStrategy } from './strategies/google.strategy';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
-import { AllConfigType } from '@/config';
+import { GoogleStrategy } from './strategies/google.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import {
+  GoogleAuthService,
+  LoginService,
+  LogoutService,
+  OtpService,
+  PasswordService,
+  RegisterService,
+  ResendOtpService,
+  TokenService,
+  VerifyOtpService,
+} from './services';
 
 @Module({
   imports: [

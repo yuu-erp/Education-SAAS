@@ -1,4 +1,6 @@
 import { CurrentUser, Public } from '@/common/decorators';
+import { JwtAuthGuard } from '@/common/guards';
+import type { RequestUser } from '@/common/types';
 import {
   Body,
   Controller,
@@ -7,25 +9,25 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from '@/common/guards';
-import type { RequestUser } from '@/common/types';
 import {
   ForgotPasswordDto,
   LoginDto,
   RefreshTokenDto,
   RegisterDto,
+  ResendOtpDto,
   ResetPasswordDto,
   VerifyOtpDto,
-  ResendOtpDto,
 } from '../dto';
 import { AuthTokens } from '../interfaces';
-import { RegisterService } from '../services/register.service';
-import { LoginService } from '../services/login.service';
-import { TokenService } from '../services/token.service';
-import { PasswordService } from '../services/password.service';
-import { VerifyOtpService } from '../services/verify-otp.service';
-import { ResendOtpService } from '../services/resend-otp.service';
-import { LogoutService } from '../services/logout.service';
+import {
+  LoginService,
+  LogoutService,
+  PasswordService,
+  RegisterService,
+  ResendOtpService,
+  TokenService,
+  VerifyOtpService,
+} from '../services';
 
 @Controller('auth')
 export class AuthController {
